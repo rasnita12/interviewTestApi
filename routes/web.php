@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +26,20 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
     ->middleware('guest');
 
+//logout
 Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
+    
+//register
+Route::get('register', [RegisterController::class, 'create'])
+    ->name('register')
+    ->middleware('guest');
+
+Route::post('register', [RegisterController::class, 'store'])
+    ->name('register.store')
+    ->middleware('guest');
+
+
 
 // Dashboard
 Route::get('/', [DashboardController::class, 'index'])

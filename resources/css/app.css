@@ -5,3 +5,10 @@
 @import 'form';
 
 @import 'tailwindcss/utilities';
+
+.n-form-item.n-form-item--top-labelled .n-form-item-label
+{
+    align-items: center;
+    padding: 0;
+    font-weight: 500;
+}
