@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\User\UserAccountController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,11 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 // Dashboard
 Route::get('/', [DashboardController::class, 'index'])
     ->name('dashboard')
+    ->middleware('auth');
+
+//Home
+Route::get('/account', [UserAccountController::class, 'index'])
+    ->name('user.account')
     ->middleware('auth');
 
 
