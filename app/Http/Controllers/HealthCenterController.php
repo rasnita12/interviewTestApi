@@ -21,6 +21,8 @@ class HealthCenterController extends Controller
                 return redirect()->route('user.account')->with('error', 'Please check your postcode and try again.');
             }
             $this->data['postcode'] = $request->input('postcode');
+        } else {
+            return redirect()->route('user.account')->with('error', 'Please check your postcode and try again.');
         }
         return Inertia::render('HealthCenter/Index', $this->data);
     }
@@ -58,7 +60,6 @@ class HealthCenterController extends Controller
                     return $a['distance'] <=> $b['distance'];
                 });
                 return $allHealtCenters;
-                // return $healthCenters['results'] ?? [];
             }catch(Throwable $e)
             {
                 return false;

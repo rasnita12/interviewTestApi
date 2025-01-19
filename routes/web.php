@@ -52,8 +52,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('health-centers', [HealthCenterController::class, 'index'])->middleware('role:Customer')->name('get.address');
 
+
     //customers
-    Route::get('/customers', [CustomerController::class, 'index'])
-        ->name('customers')
-        ->middleware('role:Admin');
+    Route::group(['prefix' => 'customers', 'middleware' => ['role:Admin']], function() {
+        Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
+        Route::get('/ajax/list', [CustomerController::class, 'ajaxList'])->name('customers.lists');
+        Route::get('/{id}/fetch/history', [CustomerController::class, 'fetchHistory'])->name('customers.history');
+    });
+
 });

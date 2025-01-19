@@ -25,7 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->throttleApi();
 
         $middleware->alias([
-            'Location' => 'Stevebauman\Location\Facades\Location',
             'role' => RoleMiddleware::class,
             'auth' => Authenticate::class,
             'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,

@@ -1,74 +1,70 @@
 <template>
   <div>
-    <n-list :show-divider="false" hoverable class="mt-3" style="background-color: #222d32">
-      <n-list-item class="text-white"><Link :href="route('dashboard')"> <i class="fa fa-home"></i> Dashbaord </Link></n-list-item>
-      <n-list-item class="text-white"><Link :href="route('customers')"> <i class="fa fa-user"></i> Customer </Link></n-list-item>
-    </n-list>
+      <a-menu :openKeys="openKeys" :selectedKeys="selectedKeys" mode="inline" theme="dark" style="background-color: #222d32">
+          <a-menu-item key="dashboard">
+              <Link :href="route('dashboard')"> <DashboardOutlined /> Dashboard </Link>
+          </a-menu-item>
+          <a-menu-item key="customer">
+              <Link :href="route('customers.index')"> <UserOutlined /> Customer </Link>
+          </a-menu-item>
+      </a-menu>
   </div>
 </template>
 
 <script>
-import { Link } from '@inertiajs/vue3'
-import Icon from '@/Shared/Icon.vue'
+import {Link} from '@inertiajs/vue3'
+import {
+    DashboardOutlined,
+    UserOutlined
+} from "@ant-design/icons-vue";
 
 export default {
   components: {
-    Icon,
-    Link,
+      DashboardOutlined,
+      UserOutlined,
+      Link
   },
-  data: () => ({
-    menuOptions: [
-      {
-        key: 'dashboard',
-        label: 'Dashboard',
-      },
-      {
-        key: 'services',
-        label: 'Services',
-        children: [
-          {
-            key: 'web-development',
-            label: 'Web Development',
-          },
-          {
-            key: 'mobile-development',
-            label: 'Mobile Development',
-          },
-        ],
-      },
-      {
-        key: 'products',
-        label: 'Products',
-        children: [
-          {
-            key: 'software',
-            label: 'Software',
-          },
-          {
-            key: 'hardware',
-            label: 'Hardware',
-          },
-        ],
-      },
-      {
-        key: 'about-us',
-        label: 'About Us',
-      },
-    ],
-  }),
-  methods: {
-    isUrl(...urls) {
-      let currentUrl = this.$page.url.substr(1)
-      if (urls[0] === '') {
-        return currentUrl === ''
+    data() {
+      return {
+
       }
-      return urls.filter((url) => currentUrl.startsWith(url)).length
     },
+
+    computed: {
+        openKeys() {
+          return []
+        },
+        selectedKeys() {
+            if(this.currentRoute('dashboard')) {
+                return ['dashboard']
+            } else if(this.currentRoute('customers.index')) {
+                return ['customer']
+            } else {
+                return []
+            }
+        }
+    },
+  methods: {
+      currentRoute(routeName) {
+         return routeName === this.$page.props.current_route
+      },
+      getCurrentUrlSegment() {
+          const currentUrl = window.location.pathname;
+          const segments = currentUrl.split('/');
+          return segments[segments.length - 1];
+      }
   },
 }
 </script>
-<style scoped>
-.n-list.n-list--hoverable .n-list-item:hover {
-  background-color: #f1f1f142 !important
+<style>
+.ant-menu-item-active:hover, .ant-menu-submenu-active:hover{
+    background-color: #f1f1f142 !important; /* Use the 'gold' color */
+    /* Add any other styles you want for the hover effect */
+}
+.ant-menu-item-selected {
+    background-color: #f1f1f142 !important;
+}
+.ant-menu-submenu-title:active{
+    background-color:  transparent !important;
 }
 </style>

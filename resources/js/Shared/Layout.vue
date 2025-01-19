@@ -13,7 +13,7 @@
                 <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
               </template>
               <template #dropdown>
-                <div class="mt-2 px-8 py-4 bg-indigo-800 rounded shadow-lg">
+                <div class="mt-2 bg-indigo-800 rounded shadow-lg">
                   <main-menu />
                 </div>
               </template>
@@ -33,8 +33,6 @@
               </template>
               <template #dropdown>
                 <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
-                  <Link class="block px-6 py-2 hover:text-white hover:bg-indigo-500" :href="`/users/${auth.user.id}/edit`">My Profile</Link>
-                  <Link class="block px-6 py-2 hover:text-white hover:bg-indigo-500" href="/users">Manage Users</Link>
                   <Link class="block px-6 py-2 w-full text-left hover:text-white hover:bg-indigo-500" href="/logout" method="delete" as="button">Logout</Link>
                 </div>
               </template>
@@ -42,12 +40,12 @@
           </div>
         </div>
         <div class="md:flex md:grow md:overflow-hidden">
-          <main-menu class="hidden shrink-0 px-3 w-56 overflow-y-auto md:block" style="background-color: #222d32" />
+          <main-menu class="hidden shrink-0 w-56 overflow-y-auto md:block" style="background-color: #222d32" />
           <div class="px-4 py-8 md:flex-1 md:p-4 md:overflow-y-auto" style="background-color: #f0f2f5;" scroll-region>
-            <n-config-provider>
+            <a-config-provider>
             <flash-messages />
             <slot />
-            </n-config-provider>
+            </a-config-provider>
           </div>
         </div>
       </div>

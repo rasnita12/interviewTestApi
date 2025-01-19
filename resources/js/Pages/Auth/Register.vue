@@ -1,134 +1,74 @@
 <template>
   <Head title="Login" />
   <div class="flex items-center justify-center min-h-screen bg-gray-200 rounded-lg mx-3 md:mx-0">
-    <div class="flex bg-white shadow-xl overflow-hidden rounded-lg max-w-4xl w-full">
-
+    <div class="flex bg-white shadow-xl overflow-hidden rounded-lg max-w-6xl w-full">
       <!-- Left Side: Login Form -->
       <div class="w-full md:w-1/2 px-3 py-8 md:py-10 md:px-10">
-        <n-form :model="form" ref="formRef" class="bg-white" @submit.prevent="register">
+        <a-form :model="form" ref="form" class="bg-white" autocomplete="off" layout="vertical" @finish="register">
           <div>
-            <h1 class="text-center text-3xl font-bold">Welcome!</h1>
+            <h1 class="text-center text-3xl font-bold">Sigma Health</h1>
             <p class="text-center text-sm font-medium mt-3">Register below to create your account</p>
-            <n-alert v-if="Object.keys(form.errors).length > 0" title="Error" type="error" class="mt-4">
-              <ul class="!mb-0">
+            <a-alert v-if="Object.keys(form.errors).length > 0" class="!mb-3" type="error" show-icon>
+              <template #description>
+                <ul class="!mb-0">
                   <li v-for="(error, field) in form.errors" :key="field">{{ error }}</li>
-              </ul>
-            </n-alert>
-            <!-- First Name Input -->
-            <div class="mt-4">
-              <n-form-item
-                label="First Name"
-                path="first_name"
-                :rule="[{
-                  required: true,
-                  message: 'First Name field is required.',
-                  trigger: ['input', 'blur'],
-                }]"
-              >
-                <n-input v-model:value="form.first_name" type="text" placeholder="Enter your first name" />
-              </n-form-item>
-            </div>
-
-            <!-- Last Name Input -->
-            <div>
-              <n-form-item
-                label="Last Name"
-                path="last_name"
-
-                :rule="[{
-                  required: true,
-                  message: 'Last Name field is required.',
-                  trigger: ['input', 'blur'],
-                }]"
-
-              >
-                <n-input v-model:value="form.last_name" type="text" placeholder="Enter your last name" />
-              </n-form-item>
-            </div>
-
-            <!-- Email Input -->
-            <div>
-              <n-form-item
-                label="Email"
-                path="email"
-                :rule="[{
-                  required: true,
-                  message: 'Email field is required.',
-                  trigger: ['input', 'blur'],
-                }]"
-              >
-                <n-input v-model:value="form.email" type="text" placeholder="Enter your email" />
-              </n-form-item>
-            </div>
-
-            <!-- Password Input -->
-            <div>
-              <n-form-item
-                label="Password"
-                path="password"
-                :rule="[{
-                  required: true,
-                  message: 'Password field is required.',
-                  trigger: ['input', 'blur'],
-                }]"
-              >
-                <n-input v-model:value="form.password" type="password" placeholder="Enter your password" />
-              </n-form-item>
-            </div>
-
-            <!-- Password Confirmation Input -->
-            <div>
-              <n-form-item
-                label="Password Confirmation"
-                path="password"
-                :rule="[{
-                  required: true,
-                  message: 'Password Confirmation field is required.',
-                  trigger: ['input', 'blur'],
-                }]"
-              >
-                <n-input v-model:value="form.password_confirmation" type="password" placeholder="Enter your password" />
-              </n-form-item>
-            </div>
-
+                </ul>
+              </template>
+            </a-alert>
+            <a-row class="mt-8" :gutter="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+              <!-- First Name Input -->
+              <a-col class="gutter-row" :span="24" :md="{ span: 12 }">
+                <text-input name="first_name" v-model="form.first_name" :rules="[{ required: true, message: 'First name field is required.' }]" label="First Name" placeholder="Enter First Name" />
+              </a-col>
+              <!-- Last Name Input -->
+              <a-col class="gutter-row" :span="24" :md="{ span: 12 }">
+                <text-input name="last_name" v-model="form.last_name" :rules="[{ required: true, message: 'Last name field is required.' }]" label="Last Name" placeholder="Enter Last Name" />
+              </a-col>
+              <!-- Email Input -->
+              <a-col class="gutter-row" :span="24">
+                <text-input name="email" v-model="form.email" :rules="[{ required: true, message: 'Email field is required.' }]" type="email" label="Email" placeholder="Enter Email" />
+              </a-col>
+              <!-- Password Input -->
+              <a-col class="gutter-row" :span="24" :md="{ span: 12 }">
+                <password-input name="password" v-model="form.password" placeholder="Enter Password" label="Password" :rules="[{ required: true, message: 'Password field is required!' }]" />
+              </a-col>
+              <a-col class="gutter-row" :span="24" :md="{ span: 12 }">
+                <password-input name="password_confirmation" v-model="form.password_confirmation" :rules="[{ required: true, message: 'Re-type password is required' }]" label="Re-Type Password" placeholder="Enter Re-Type Password" />
+              </a-col>
+            </a-row>
             <!-- Submit Button -->
-            <div class="mt-6">
-              <n-button type="warning" block :loading="form.processing" attr-type="submit">
-                Submit
-              </n-button>
+            <div class="mt-3">
+              <a-button :style="{ backgroundColor: 'orange', borderRadius: '0' }" block type="primary" size="large" html-type="submit" :loading="form.processing">Register</a-button>
             </div>
 
             <!-- Register Link -->
             <p class="text-center text-sm font-medium mt-3">
               Do you have an account?
-              <a class="cursor-pointer text-blue-700 underline" href="/login">Login</a>
+              <Link class="cursor-pointer text-blue-700 underline" :href="route('login')">Login</Link>
             </p>
           </div>
-        </n-form>
+        </a-form>
       </div>
 
       <!-- Right Side: Image -->
       <div class="hidden md:flex w-1/2 items-center justify-center bg-gray-100">
-        <img src="../../../images/sideimage.png" alt="image" class="h-full mx-auto"/>
+        <img src="../../../images/sideimage.png" alt="image" class="h-full mx-auto" />
       </div>
-
     </div>
   </div>
-
 </template>
 
 <script>
-import { Head } from '@inertiajs/vue3'
-import Logo from '@/Shared/Logo.vue'
-import TextInput from '@/Shared/TextInput.vue'
-import LoadingButton from '@/Shared/LoadingButton.vue'
+import { Head, Link } from '@inertiajs/vue3'
+import TextInput from '../../Shared/TextInput.vue'
+import PasswordInput from '../../Shared/PasswordInput.vue'
 
 export default {
   components: {
     Head,
-    LoadingButton,
-    Logo,
     TextInput,
+    Link,
+    PasswordInput,
   },
   data() {
     return {
@@ -144,12 +84,14 @@ export default {
   },
   methods: {
     register() {
-      this.$refs.formRef.validate((errors) => {
-        if (!errors) {
-          this.form.post('/register')
-        }
-      });
-
+      this.$refs.form
+        .validateFields()
+        .then(() => {
+          this.form.post(this.route('register.store'))
+        })
+        .catch((errorInfo) => {
+          console.log(errorInfo)
+        })
     },
   },
 }

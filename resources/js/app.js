@@ -5,6 +5,9 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import naive from 'naive-ui';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/reset.css';
+
 
 // Install Naive UI globally
 
@@ -19,6 +22,7 @@ createInertiaApp({
       .use(plugin)
       .use(naive)
       .use(ZiggyVue)
+      .use(Antd)
       .mount(el)
   },
 })
