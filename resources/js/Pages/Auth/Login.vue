@@ -10,7 +10,7 @@
             <h1 class="text-center text-3xl font-bold">Welcome!</h1>
             <p class="text-center text-sm font-medium mt-3">Login below to manage your account</p>
 
-            <!-- Email Input -->
+            <!-- Input -->
             <div class="mt-6">
               <n-form-item
                 label="Email"
@@ -46,7 +46,7 @@
             <!-- Register Link -->
             <p class="text-center text-sm font-medium mt-3">
               Don't have an account?
-              <a class="cursor-pointer text-blue-700 underline">Register</a>
+              <a class="cursor-pointer text-blue-700 underline" href="/register">Register</a>
             </p>
           </div>
         </n-form>

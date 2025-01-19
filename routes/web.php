@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HealthCenterController;
 use App\Http\Controllers\User\UserAccountController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +19,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Auth
+Route::get('/', function() {
+    return redirect()->route('login');
+});
 
+// Auth
 Route::get('login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
     ->middleware('guest');
@@ -28,9 +33,9 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest');
 
 //logout
-Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
+Route::any('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
-    
+
 //register
 Route::get('register', [RegisterController::class, 'create'])
     ->name('register')
@@ -40,16 +45,15 @@ Route::post('register', [RegisterController::class, 'store'])
     ->name('register.store')
     ->middleware('guest');
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('role:Admin')->name('dashboard');
 
+    Route::get('/account', [UserAccountController::class, 'index'])->middleware('role:Customer')->name('user.account');
 
-// Dashboard
-Route::get('/', [DashboardController::class, 'index'])
-    ->name('dashboard')
-    ->middleware('auth');
+    Route::get('health-centers', [HealthCenterController::class, 'index'])->middleware('role:Customer')->name('get.address');
 
-//Home
-Route::get('/account', [UserAccountController::class, 'index'])
-    ->name('user.account')
-    ->middleware('auth');
-
-
+    //customers
+    Route::get('/customers', [CustomerController::class, 'index'])
+        ->name('customers')
+        ->middleware('role:Admin');
+});

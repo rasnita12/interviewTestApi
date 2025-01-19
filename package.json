@@ -14,7 +14,6 @@
         "@popperjs/core": "^2.11.0",
         "@vitejs/plugin-vue": "^5.0.4",
         "@vue/server-renderer": "^3.2.27",
-        "autoprefixer": "^10.4.19",
         "eslint": "^8.4.1",
         "eslint-plugin-vue": "^8.2.0",
         "laravel-vite-plugin": "^1.0.2",
@@ -22,14 +21,16 @@
         "naive-ui": "^2.41.0",
         "postcss": "^8.4.38",
         "postcss-import": "^16.1.0",
-        "prettier": "^2.5.1",
-        "prettier-plugin-tailwind": "^2.2.12",
         "tailwindcss": "^3.4.3",
         "uuid": "^8.3.2",
         "vite": "^5.2.7",
         "vue": "^3.2.27"
     },
     "dependencies": {
+        "@fawmi/vue-google-maps": "^0.9.79",
+        "@fortawesome/fontawesome-free": "^6.7.2",
+        "autoprefixer": "^10.4.20",
+        "vue3-google-map": "^0.21.1",
         "ziggy-js": "^2.4.2"
     }
 }

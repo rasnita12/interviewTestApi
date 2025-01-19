@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Middleware\Authenticate;
 use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders()
@@ -21,6 +23,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(\App\Http\Middleware\HandleInertiaRequests::class);
 
         $middleware->throttleApi();
+
+        $middleware->alias([
+            'Location' => 'Stevebauman\Location\Facades\Location',
+            'role' => RoleMiddleware::class,
+            'auth' => Authenticate::class,
+            'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        ]);
 
         $middleware->replace(\Illuminate\Http\Middleware\TrustProxies::class, \App\Http\Middleware\TrustProxies::class);
     })

@@ -101,7 +101,7 @@
             <!-- Register Link -->
             <p class="text-center text-sm font-medium mt-3">
               Do you have an account?
-              <a class="cursor-pointer text-blue-700 underline">Login</a>
+              <a class="cursor-pointer text-blue-700 underline" href="/login">Login</a>
             </p>
           </div>
         </n-form>

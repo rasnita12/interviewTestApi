@@ -1,11 +1,9 @@
 <template>
   <div>
-    <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/">
-        <icon name="dashboard" class="mr-2 w-4 h-4" :class="isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Dashboard</div>
-      </Link>
-    </div>
+    <n-list :show-divider="false" hoverable class="mt-3" style="background-color: #222d32">
+      <n-list-item class="text-white"><Link :href="route('dashboard')"> <i class="fa fa-home"></i> Dashbaord </Link></n-list-item>
+      <n-list-item class="text-white"><Link :href="route('customers')"> <i class="fa fa-user"></i> Customer </Link></n-list-item>
+    </n-list>
   </div>
 </template>
 
@@ -18,6 +16,46 @@ export default {
     Icon,
     Link,
   },
+  data: () => ({
+    menuOptions: [
+      {
+        key: 'dashboard',
+        label: 'Dashboard',
+      },
+      {
+        key: 'services',
+        label: 'Services',
+        children: [
+          {
+            key: 'web-development',
+            label: 'Web Development',
+          },
+          {
+            key: 'mobile-development',
+            label: 'Mobile Development',
+          },
+        ],
+      },
+      {
+        key: 'products',
+        label: 'Products',
+        children: [
+          {
+            key: 'software',
+            label: 'Software',
+          },
+          {
+            key: 'hardware',
+            label: 'Hardware',
+          },
+        ],
+      },
+      {
+        key: 'about-us',
+        label: 'About Us',
+      },
+    ],
+  }),
   methods: {
     isUrl(...urls) {
       let currentUrl = this.$page.url.substr(1)
@@ -29,3 +67,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.n-list.n-list--hoverable .n-list-item:hover {
+  background-color: #f1f1f142 !important
+}
+</style>

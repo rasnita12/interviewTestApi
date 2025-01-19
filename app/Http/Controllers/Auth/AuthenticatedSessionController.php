@@ -30,7 +30,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(AppServiceProvider::HOME);
+        $redirectUrl = auth()->user()->hasRole('Customer') ? AppServiceProvider::CUSTOMER : AppServiceProvider::HOME;
+
+        return redirect()->intended($redirectUrl);
     }
 
     /**
