@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/account', [UserAccountController::class, 'index'])->middleware('role:Customer')->name('user.account');
 
-    Route::get('health-centers', [HealthCenterController::class, 'index'])->middleware('role:Customer')->name('get.address');
+    Route::get('/account/health-centers', [HealthCenterController::class, 'index'])->middleware('role:Customer')->name('get.address');
 
 
     //customers
@@ -58,6 +58,15 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
         Route::get('/ajax/list', [CustomerController::class, 'ajaxList'])->name('customers.lists');
         Route::get('/{id}/fetch/history', [CustomerController::class, 'fetchHistory'])->name('customers.history');
+    });
+
+    Route::group(['prefix' => 'health-centers', 'middleware' => ['role:Admin']], function() {
+        Route::get('/', [HealthCenterController::class, 'get'])->name('health-centers.index');
+        Route::get('/ajax/list', [HealthCenterController::class, 'ajaxList'])->name('health-centers.lists');
+        Route::post('/store', [HealthCenterController::class, 'store'])->name('health-centers.store');
+        Route::get('/create', [HealthCenterController::class, 'create'])->name('health-centers.create');
+        Route::get('/{id}/edit', [HealthCenterController::class, 'edit'])->name('health-centers.edit');
+        Route::patch('/{id}/update', [HealthCenterController::class, 'update'])->name('health-centers.update');
     });
 
 });

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HealthCenterRequest;
+use App\Models\HealthCenter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Throwable;
@@ -11,6 +14,69 @@ class HealthCenterController extends Controller
 {
     public array $data = [];
 
+    public function get()
+    {
+        return Inertia::render('HealthCenter/Admin/Index');
+    }
+
+    public function ajaxList(Request $request)
+    {
+        $query = HealthCenter::query();
+
+        if($request->filled('search')){
+            $search = $request->query('search');
+            $query->where(function($query) use ($search){
+               $query->where('health_centers.name', 'like', "%{$search}%")
+                   ->orWhere("health_centers.phone", 'like', "%{$search}%");
+            });
+        }
+
+        if($request->has(['field', 'direction'])) {
+            $query->orderBy($request->query('field'), $request->query('direction'));
+        }
+
+        return $query->paginate($request->query('size', 10));
+    }
+
+    public function create()
+    {
+        return Inertia::render('HealthCenter/Admin/Create');
+    }
+
+    public function store(HealthCenterRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            HealthCenter::query()->create($request->validated());
+            DB::commit();
+            return redirect()->route('health-centers.index');
+        } catch (Throwable $throwable) {
+            return redirect()->back()->with('error', $throwable->getMessage());
+            DB::rollBack();
+        }
+    }
+
+    public function edit($id)
+    {
+        $data['healthCenter'] = HealthCenter::query()->findOrFail($id);;
+        return Inertia::render('HealthCenter/Admin/Edit', $data);
+    }
+
+    public function update(HealthCenterRequest $request, $id)
+    {
+        $healthCenter = HealthCenter::query()->findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $healthCenter->update($request->validated());
+            DB::commit();
+            return redirect()->route('health-centers.index');
+        } catch (Throwable $throwable) {
+            return redirect()->back()->with('error', $throwable->getMessage());
+            DB::rollBack();
+        }
+    }
+
+
     public function index(Request $request)
     {
         $data['healthCenters'] = [];
@@ -18,11 +84,11 @@ class HealthCenterController extends Controller
         if($request->has('postcode') && $request->filled('postcode')) {
             $this->data['healthCenters'] = $this->getHealthCenters($request->input('postcode'));
             if(!$this->data['healthCenters']) {
-                return redirect()->route('user.account')->with('error', 'Please check your postcode and try again.');
+                return redirect()->route('user.account')->with('error', 'Please check your address and try again.');
             }
             $this->data['postcode'] = $request->input('postcode');
         } else {
-            return redirect()->route('user.account')->with('error', 'Please check your postcode and try again.');
+            return redirect()->route('user.account')->with('error', 'Please check your address and try again.');
         }
         return Inertia::render('HealthCenter/Index', $this->data);
     }
@@ -44,22 +110,41 @@ class HealthCenterController extends Controller
 
                 $this->data['center'] = ['lat' => $lat, 'lng' => $lng];
 
+                $healthCenters = DB::table('health_centers')
+                    ->select(
+                        'id',
+                        'name',
+                        'latitude',
+                        'longitude',
+                        DB::raw("(
+                            3959 * acos(
+                                cos(radians($lat)) * cos(radians(latitude)) *
+                                cos(radians(longitude) - radians($lng)) +
+                                sin(radians($lat)) * sin(radians(latitude))
+                            )
+                        ) AS distance")
+                    )
+                    ->having('distance', '<=', 10)
+                    ->orderBy('distance', 'asc')
+                    ->get();
+
+
                 // Places API to get health centers
-                $placesResponse = Http::get("https://maps.googleapis.com/maps/api/place/nearbysearch/json", [
-                    'location' => "{$lat},{$lng}",
-                    'radius' => 5000, // Radius in meters
-                    'type' => 'hospital', // Or 'health'
-                    'key' => $apiKey,
-                ]);
-                $response = $placesResponse->json();
-                $allHealtCenters = array_map(function ($item) use($lat, $lng) {
-                    $item['distance'] = round($this->calculateDistance($lat, $lng, $item['geometry']['location']['lat'],$item['geometry']['location']['lng']), 2);
-                    return $item;
-                },$response['results'] ?? []);
-                usort($allHealtCenters, function($a, $b) {
-                    return $a['distance'] <=> $b['distance'];
-                });
-                return $allHealtCenters;
+                // $placesResponse = Http::get("https://maps.googleapis.com/maps/api/place/nearbysearch/json", [
+                //     'location' => "{$lat},{$lng}",
+                //     'radius' => 5000, // Radius in meters
+                //     'type' => 'hospital', // Or 'health'
+                //     'key' => $apiKey,
+                // ]);
+                // $response = $placesResponse->json();
+                // $allHealtCenters = array_map(function ($item) use($lat, $lng) {
+                //     $item['distance'] = round($this->calculateDistance($lat, $lng, $item['geometry']['location']['lat'],$item['geometry']['location']['lng']), 2);
+                //     return $item;
+                // },$response['results'] ?? []);
+                // usort($allHealtCenters, function($a, $b) {
+                //     return $a['distance'] <=> $b['distance'];
+                // });
+                return $healthCenters;
             }catch(Throwable $e)
             {
                 return false;

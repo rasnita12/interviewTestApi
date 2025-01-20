@@ -7,6 +7,9 @@
           <a-menu-item key="customer">
               <Link :href="route('customers.index')"> <UserOutlined /> Customer </Link>
           </a-menu-item>
+          <a-menu-item key="health-center">
+              <Link :href="route('health-centers.index')"> <UserOutlined /> Health Center </Link>
+          </a-menu-item>
       </a-menu>
   </div>
 </template>
@@ -39,6 +42,8 @@ export default {
                 return ['dashboard']
             } else if(this.currentRoute('customers.index')) {
                 return ['customer']
+            } else if(this.currentRoute('health-centers.index')) {
+                return ['health-center']
             } else {
                 return []
             }
