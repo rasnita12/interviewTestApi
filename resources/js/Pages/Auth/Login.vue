@@ -9,6 +9,8 @@
             <h1 class="text-center text-3xl font-bold">Sigma Health</h1>
             <p class="text-center text-sm font-medium mt-3">Login below to manage your account</p>
 
+            <a-alert v-if="successMessage" :message="successMessage" type="success" show-icon />
+
             <a-alert v-if="Object.keys(form.errors).length > 0" class="!mb-3" type="error" show-icon>
               <template #description>
                 <ul class="!mb-0">
@@ -68,7 +70,15 @@ export default {
         password: '',
         remember: false,
       }),
+      successMessage: null,
     }
+  },
+  mounted() {
+    this.successMessage = this.$page?.props?.flash?.success ?? null
+
+    setTimeout(() => {
+        this.successMessage = null;
+    }, 10000);
   },
   methods: {
     login() {

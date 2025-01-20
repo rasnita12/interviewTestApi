@@ -36,12 +36,12 @@
     "src": "resources/images/sideimage.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-Pw6_iLkJ.js",
+    "file": "assets/app-Bc1D0NOz.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-BKOPN6gZ.css"
+      "assets/app-JRmLbb1j.css"
     ],
     "assets": [
       "assets/sideimage-7_nwe2h4.png",

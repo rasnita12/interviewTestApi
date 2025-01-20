@@ -8,7 +8,7 @@
               <Link :href="route('customers.index')"> <UserOutlined /> Customer </Link>
           </a-menu-item>
           <a-menu-item key="health-center">
-              <Link :href="route('health-centers.index')"> <UserOutlined /> Health Center </Link>
+              <Link :href="route('health-centers.index')"> <i class="fa-regular fa-hospital"></i> Health Center </Link>
           </a-menu-item>
       </a-menu>
   </div>

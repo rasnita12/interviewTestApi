@@ -1,8 +1,8 @@
 <template>
   <Head title="Home" />
   <div class="min-h-screen bg-white">
-    <div class="container mx-auto w-full max-w-4xl p-10">
-      <div class="flex justify-between items-center">
+    <div class="">
+      <div class="container mx-auto w-full p-10 flex justify-between items-center">
         <h1 class="font-bold text-lg md:text-4xl !text-center mb-0 md:mb-4">SIGMA HEALTH</h1>
         <a-dropdown :arrow="true" class="text-sm md:text-base">
           <a class="ant-dropdown-link" @click.prevent>
@@ -21,6 +21,7 @@
           </template>
         </a-dropdown>
       </div>
+
       <div class="flex flex-col justify-center items-center mt-3 md:mt-0">
         <div class="w-full max-w-4xl">
           <a-form :model="form" ref="form" class="bg-white" autocomplete="off" layout="vertical" @finish="submit">
@@ -40,7 +41,9 @@
       </div>
     </div>
   </div>
+  <div class="hidden">
   <GoogleMap api-key="AIzaSyCi327LFl7byyspi_v7snyRjEVQPptUBPc" mapId="30a0d969799b3759" style="width: 100%; height: 100vh"> </GoogleMap>
+  </div>
 </template>
 <script>
 import { Head, Link } from '@inertiajs/vue3'

@@ -11,7 +11,6 @@
         </a-breadcrumb>
       </div>
 
-      <a-button html-type="link" type="primary" size="middle"> List </a-button>
     </div>
 
     <a-card :bordered="true">

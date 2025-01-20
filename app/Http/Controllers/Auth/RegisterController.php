@@ -26,7 +26,7 @@ class RegisterController extends Controller
         if($user)
         {
             $user->assignRole([2]);
-            return redirect()->route('login');
+            return redirect()->route('login')->with('success', 'Register Successfully!');
         }else{
             return redirect()->back()->with('error','User registration failed!');
         }

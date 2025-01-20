@@ -51,8 +51,8 @@ class HealthCenterController extends Controller
             DB::commit();
             return redirect()->route('health-centers.index');
         } catch (Throwable $throwable) {
-            return redirect()->back()->with('error', $throwable->getMessage());
             DB::rollBack();
+            return redirect()->back()->with('error', $throwable->getMessage());
         }
     }
 
@@ -71,8 +71,28 @@ class HealthCenterController extends Controller
             DB::commit();
             return redirect()->route('health-centers.index');
         } catch (Throwable $throwable) {
-            return redirect()->back()->with('error', $throwable->getMessage());
             DB::rollBack();
+            return redirect()->back()->with('error', $throwable->getMessage());
+        }
+    }
+
+    public function delete($id)
+    {
+        $healthCenter = HealthCenter::query()->findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $healthCenter->delete();
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => 'Health center deleted successfully.'
+            ]);
+        } catch (Throwable $throwable) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => app()->isProduction() ? 'Failed to delete health center.' : $throwable->getMessage()
+            ], 500);
         }
     }
 
@@ -116,6 +136,10 @@ class HealthCenterController extends Controller
                         'name',
                         'latitude',
                         'longitude',
+                        'line_1',
+                        'postcode',
+                        'county',
+                        'city',
                         DB::raw("(
                             3959 * acos(
                                 cos(radians($lat)) * cos(radians(latitude)) *
@@ -144,6 +168,9 @@ class HealthCenterController extends Controller
                 // usort($allHealtCenters, function($a, $b) {
                 //     return $a['distance'] <=> $b['distance'];
                 // });
+                $healthCenters->each(function($item) {
+                    $item->distance = round($item->distance, 2);
+                });
                 return $healthCenters;
             }catch(Throwable $e)
             {

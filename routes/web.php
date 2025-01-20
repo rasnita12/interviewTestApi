@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/create', [HealthCenterController::class, 'create'])->name('health-centers.create');
         Route::get('/{id}/edit', [HealthCenterController::class, 'edit'])->name('health-centers.edit');
         Route::patch('/{id}/update', [HealthCenterController::class, 'update'])->name('health-centers.update');
+        Route::delete('/{id}/destroy', [HealthCenterController::class, 'delete'])->name('health-centers.delete');
     });
 
 });

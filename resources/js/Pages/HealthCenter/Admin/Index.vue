@@ -38,11 +38,17 @@
       >
         <template #bodyCell="{ column, text, record }">
           <template v-if="column.dataIndex === 'action'">
-            <Link :href="this.route('health-centers.edit', {id: record.id})">
+            <Link :href="this.route('health-centers.edit', { id: record.id })">
               <a-button cl html-type="link" type="primary" size="middle">
                 <template #icon><EditOutlined /></template>
               </a-button>
             </Link>
+            <a-popconfirm placement="topRight" title="Are you sure?" @confirm="deleteConfirm(record.id)">
+              <template #icon><QuestionCircleOutlined style="color: red" /></template>
+              <a-button class="ml-2" type="primary" size="middle" danger>
+                <template #icon><DeleteOutlined /></template>
+              </a-button>
+            </a-popconfirm>
           </template>
         </template>
       </a-table>
@@ -63,7 +69,7 @@
 import { Head, Link } from '@inertiajs/vue3'
 import Layout from '@/Shared/Layout.vue'
 import axios from 'axios'
-import { SearchOutlined, PlusOutlined, EditOutlined } from '@ant-design/icons-vue'
+import { SearchOutlined, PlusOutlined, EditOutlined, QuestionCircleOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import TextInput from '../../../Shared/TextInput.vue'
 import debounce from 'lodash/debounce.js'
 import dayjs from 'dayjs'
@@ -74,7 +80,9 @@ export default {
     Link,
     TextInput,
     PlusOutlined,
-    EditOutlined
+    EditOutlined,
+    QuestionCircleOutlined,
+    DeleteOutlined,
   },
   layout: Layout,
 
@@ -159,6 +167,23 @@ export default {
         }
         this.initialize()
       }
+    },
+
+    async deleteConfirm(id) {
+      this.loading = true
+
+      await axios
+        .delete(this.route('health-centers.delete', { id: id }))
+        .then((response) => {
+          this.$message.success(response.data.message)
+          this.initialize()
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
 
     async initialize() {
