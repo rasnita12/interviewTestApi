@@ -29,8 +29,17 @@ class HealthCenterRequest extends FormRequest
             'postcode' => 'required',
             'city' => 'required',
             'county' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'active' => 'nullable|boolean'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'latitude.numeric' => 'The latitude must be a valid number.',
+            'longitude.numeric' => 'The longitude must be a valid number.',
         ];
     }
 }

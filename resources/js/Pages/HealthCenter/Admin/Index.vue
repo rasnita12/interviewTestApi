@@ -35,6 +35,7 @@
         }"
         @change="handleSorting"
         bordered
+        :scroll="{ x: 'max-content' }"
       >
         <template #bodyCell="{ column, text, record }">
           <template v-if="column.dataIndex === 'action'">
@@ -49,6 +50,9 @@
                 <template #icon><DeleteOutlined /></template>
               </a-button>
             </a-popconfirm>
+          </template>
+          <template v-if="column.dataIndex === 'active'">
+            <a-badge :count="[true, 'true'].includes(record.active) ? 'Yes' : 'No'" :number-style="{ backgroundColor: [true, 'true'].includes(record.active) ? '#52c41a' : '' }" />
           </template>
         </template>
       </a-table>
@@ -101,6 +105,13 @@ export default {
           key: 'phone',
           dataIndex: 'phone',
           sorter: true,
+          showSorterTooltip: false,
+        },
+        {
+          title: 'Active',
+          dataIndex: 'active',
+          key: 'active',
+          sorter: false,
           showSorterTooltip: false,
         },
         {

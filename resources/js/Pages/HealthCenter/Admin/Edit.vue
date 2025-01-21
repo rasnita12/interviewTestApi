@@ -10,7 +10,6 @@
           <a-breadcrumb-item>Create</a-breadcrumb-item>
         </a-breadcrumb>
       </div>
-
     </div>
 
     <a-card :bordered="true">
@@ -30,6 +29,9 @@
             </a-col>
             <a-col class="gutter-row" :span="24" :sm="{ span: 12 }">
               <text-input name="phone" v-model="form.phone" :rules="[{ required: true, message: 'The phone field is required.' }]" label="Phone" placeholder="Enter Phone Name" />
+            </a-col>
+            <a-col class="gutter-row" :span="24" :sm="{ span: 12 }">
+              <a-checkbox v-model:checked="form.active">Active</a-checkbox>
             </a-col>
           </a-row>
         </a-card>
@@ -78,7 +80,7 @@ export default {
   },
   layout: Layout,
   props: {
-    healthCenter: Object
+    healthCenter: Object,
   },
   data() {
     return {
@@ -92,6 +94,7 @@ export default {
         county: this.healthCenter?.county ?? null,
         latitude: this.healthCenter?.latitude ?? null,
         longitude: this.healthCenter?.longitude ?? null,
+        active: this.healthCenter?.active ?? true,
       }),
       submitting: false,
     }
@@ -106,7 +109,7 @@ export default {
       this.$refs.form
         .validateFields()
         .then(() => {
-          this.form.patch(this.route('health-centers.update', {id: this.healthCenter.id}), {
+          this.form.patch(this.route('health-centers.update', { id: this.healthCenter.id }), {
             preserveState: true,
             onSuccess: (page) => {
               this.submitting = false

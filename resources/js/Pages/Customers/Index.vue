@@ -27,6 +27,7 @@
         }"
         @change="handleSorting"
         bordered
+        :scroll="{ x: 'max-content' }"
       >
         <template #bodyCell="{ column, text, record }">
           <template v-if="column.dataIndex === 'action'">

@@ -20,6 +20,11 @@ class HealthCenter extends Model
         'county',
         'city',
         'latitude',
-        'latitude'
+        'latitude',
+        'active'
+    ];
+
+    protected $casts = [
+        'active' => 'boolean'
     ];
 }
