@@ -5,9 +5,7 @@
       <div class="md:flex md:flex-col md:h-screen">
         <div class="md:flex md:shrink-0">
           <div class="flex items-center justify-between px-6 py-4 bg-black md:shrink-0 md:justify-center md:w-56">
-            <Link class="mt-1 font-bold text-white text-xl" href="/">
-              SIGMA HEALTH
-            </Link>
+            <Link class="mt-1 font-bold text-white text-xl" href="/"> SIGMA HEALTH </Link>
             <dropdown class="md:hidden" placement="bottom-end">
               <template #default>
                 <svg class="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
@@ -20,7 +18,8 @@
             </dropdown>
           </div>
           <div class="md:text-md flex items-center justify-between p-4 w-full text-sm bg-white border-b md:px-12 md:py-0">
-            <div class="mr-4 mt-1">{{ auth.user.name }}</div>
+            <div></div>
+            <!-- <div class="mr-4 mt-1">{{ auth.user.name }}</div>
             <dropdown class="mt-1" placement="bottom-end">
               <template #default>
                 <div class="group flex items-center cursor-pointer select-none">
@@ -36,15 +35,31 @@
                   <Link class="block px-6 py-2 w-full text-left hover:text-white hover:bg-indigo-500" href="/logout" method="delete" as="button">Logout</Link>
                 </div>
               </template>
-            </dropdown>
+            </dropdown> -->
+            <a-dropdown :arrow="true" class="text-sm md:text-base">
+              <a class="ant-dropdown-link" @click.prevent>
+                {{ $page?.props.auth.user.first_name + ' ' + $page?.props.auth.user.last_name }}
+                <i class="fa fa-chevron-down"></i>
+              </a>
+              <template #overlay>
+                <a-menu>
+                  <a-menu-item>
+                    <Link :href="this.route('logout')" method="delete" as="button">
+                      <LogoutOutlined />
+                      Logout
+                    </Link>
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
           </div>
         </div>
         <div class="md:flex md:grow md:overflow-hidden">
           <main-menu class="hidden shrink-0 w-56 overflow-y-auto md:block" style="background-color: #222d32" />
-          <div class="px-4 py-8 md:flex-1 md:p-4 md:overflow-y-auto" style="background-color: #f0f2f5;" scroll-region>
+          <div class="px-4 py-8 md:flex-1 md:p-4 md:overflow-y-auto" style="background-color: #f0f2f5" scroll-region>
             <a-config-provider>
-            <flash-messages />
-            <slot />
+              <flash-messages />
+              <slot />
             </a-config-provider>
           </div>
         </div>
@@ -60,6 +75,8 @@ import Logo from '@/Shared/Logo.vue'
 import Dropdown from '@/Shared/Dropdown.vue'
 import MainMenu from '@/Shared/MainMenu.vue'
 import FlashMessages from '@/Shared/FlashMessages.vue'
+import { LogoutOutlined } from '@ant-design/icons-vue'
+
 
 export default {
   components: {
@@ -69,10 +86,10 @@ export default {
     Link,
     Logo,
     MainMenu,
+    LogoutOutlined
   },
   props: {
     auth: Object,
   },
-
 }
 </script>
