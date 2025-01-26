@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public const HOME = '/dashboard';
 
-    public const CUSTOMER = '/account';
+    public const CUSTOMER = '/health-centers/search-health-center';
 
     /**
      * Register any application services.

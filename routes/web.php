@@ -70,4 +70,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('/{id}/destroy', [HealthCenterController::class, 'delete'])->name('health-centers.delete');
     });
 
+    Route::group(['prefix' => 'health-centers', 'middleware' => ['role:Customer']], function() {
+        Route::get('/search-health-center', [HealthCenterController::class,'loadHealthCenterViewPage'])->name('load-health-center');
+
+    });
+
 });

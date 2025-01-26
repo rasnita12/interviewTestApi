@@ -199,4 +199,9 @@ class HealthCenterController extends Controller
         // Convert to miles
         return $distanceKm * $kmToMile;
     }
+
+    public function loadHealthCenterViewPage()
+    {
+        return Inertia::render('healthcenters/index');
+    }
 }

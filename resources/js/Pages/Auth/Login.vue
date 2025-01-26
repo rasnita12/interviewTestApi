@@ -18,6 +18,7 @@
                 </ul>
               </template>
             </a-alert>
+            
             <!-- Input -->
             <div class="mt-6">
               <text-input name="email" v-model="form.email" class="mt-10" :rules="[{ required: true, message: 'The email field is required.' }]" label="Email" type="email" placeholder="Enter Email" />
