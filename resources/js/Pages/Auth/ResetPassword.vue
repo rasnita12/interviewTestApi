@@ -32,7 +32,7 @@
               <a-button :style="{borderRadius: '0' }" class="mt-4" style="background-color:#1f2835" block type="primary" size="large" html-type="submit" :loading="form.processing">Reset Password</a-button>
             </div>
 
-            <p class="mt-3 text-center">Know your password? <Link :href="route('login')">Login </Link></p>
+            <p class="mt-3 text-center">Know your password? <Link :href="route('login')" class="cursor-pointer text-blue-700 underline">Login </Link></p>
           </div>
         </a-form>
       </div>
