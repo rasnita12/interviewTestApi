@@ -148,7 +148,7 @@ class HealthCenterController extends Controller
                             )
                         ) AS distance")
                     )
-                    ->having('distance', '<=', 10)
+                    ->having('distance', '<=', 70)
                     ->where('active', '=', true)
                     ->orderBy('distance', 'asc')
                     ->get();
