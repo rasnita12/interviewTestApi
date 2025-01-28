@@ -4,7 +4,7 @@
     <div class="flex flex-row items-center">
       <h1 class="mb-4 text-3xl font-bold mr-3">Customers</h1>
       <a-breadcrumb>
-        <a-breadcrumb-item><Link :href="route('dashboard')">Dashbaord</Link></a-breadcrumb-item>
+        <a-breadcrumb-item><Link :href="route('dashboard')">Dashboard</Link></a-breadcrumb-item>
         <a-breadcrumb-item>Customers</a-breadcrumb-item>
       </a-breadcrumb>
     </div>

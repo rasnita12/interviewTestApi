@@ -1,7 +1,7 @@
 <template>
   <Head title="Home" />
   <div class="container mx-auto">
-    <h1 class="text-center text-lg md:text-3xl font-bold py-4 md:py-8">Select Your Health Center</h1>
+    <h1 class="text-center text-lg md:text-3xl font-bold py-4 md:py-8" style="color:#1f2835">Select Your Health Center</h1>
     <a-dropdown :arrow="true" class="pl-8">
       <a class="ant-dropdown-link cursor-pointer text-sm md:text-base" @click.prevent>
         {{ $page?.props.auth.user.first_name + ' ' + $page?.props.auth.user.last_name }}
@@ -33,7 +33,7 @@
                   <p class="mt-1 text-sm md:text-base">Distance: {{ item.distance }} mile</p>
                 </div>
                 <div>
-                  <a-button class="!rounded-md" :style="{ backgroundColor: 'orange', borderRadius: '0' }" type="primary" size="middle" html-type="submit">Select</a-button>
+                  <a-button class="!rounded-md" :style="{  borderRadius: '0' }" type="primary" size="middle" html-type="submit" style="background-color:#1f2835" @click="redirectToBookPage">Book</a-button>
                 </div>
               </li>
             </ul>
@@ -80,6 +80,10 @@ export default {
     },
   },
   mounted() {},
-  methods: {},
+  methods: {
+    redirectToBookPage() {
+      window.location.href = 'https://d4medicals.as.me/'
+    },
+  },
 }
 </script>

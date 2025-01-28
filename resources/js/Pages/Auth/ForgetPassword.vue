@@ -21,9 +21,10 @@
             </a-alert>
             <!-- Input -->
             <div class="mt-6">
-              <text-input name="email" v-model="form.email" class="mt-10" :rules="[{ required: true, message: 'The email field is required.' }]" label="Email" type="email" placeholder="Enter Email" />
+              <!-- <text-input name="email" v-model="form.email" class="mt-10" :rules="[{ required: true, message: 'The email field is required.' }]" label="Email" type="email" placeholder="Enter Email" /> -->
 
-              <password-input name="password" v-model="form.password" placeholder="Enter Password" label="Password" :rules="[{ required: true, message: 'The password field is required!' }]" class="mt-5" />
+              <password-input name="password" v-model="form.password" placeholder="Enter New Password" label="New Password" :rules="[{ required: true, message: 'The new password field is required!' }]" class="mt-5" />
+              <password-input name="password" v-model="form.password" placeholder="Enter New Password Again" label="New Password Again" :rules="[{ required: true, message: 'The  new password field is required!' }]" class="mt-5" />
 
               <a-checkbox v-model:checked="form.remember">Remember Me</a-checkbox>
 
@@ -31,20 +32,8 @@
 
             <!-- Submit Button -->
             <div class="mt-6">
-              <a-button :style="{borderRadius: '0' }" class="mt-4" style="background-color:#1f2835" block type="primary" size="large" html-type="submit" :loading="form.processing">Login</a-button>
+              <a-button :style="{borderRadius: '0' }" class="mt-4" style="background-color:#1f2835" block type="primary" size="large" html-type="submit" :loading="form.processing">Reset Password</a-button>
             </div>
-
-            <!-- forgot password -->
-            <p class="text-center text-sm font-medium mt-3">
-              Don't remember a password?
-              <Link class="cursor-pointer text-blue-700 underline" :href="route('login.forgot-password')">Reset Password</Link>
-            </p>
-
-            <!-- Register Link -->
-            <p class="text-center text-sm font-medium mt-3">
-              Don't have an account?
-              <Link class="cursor-pointer text-blue-700 underline" :href="route('register')">Register</Link>
-            </p>
           </div>
         </a-form>
       </div>

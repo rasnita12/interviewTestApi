@@ -1,12 +1,14 @@
 <template>
   <Head title="Login" />
-  <div class="flex items-center justify-center min-h-screen bg-gray-200 rounded-lg mx-3 md:mx-0">
+  <div class="flex items-center justify-center min-h-screen bg-gray-200 rounded-lg mx-3 md:mx-0" style="background-color: #7fb1d3">
     <div class="flex bg-white shadow-xl overflow-hidden rounded-lg max-w-6xl w-full">
       <!-- Left Side: Login Form -->
       <div class="w-full md:w-1/2 px-3 py-8 md:py-10 md:px-10">
         <a-form :model="form" ref="form" class="bg-white" autocomplete="off" layout="vertical" @finish="register">
           <div>
-            <h1 class="text-center text-3xl font-bold">Sigma Health</h1>
+            <!-- <h1 class="text-center text-3xl font-bold">Sigma Health</h1> -->
+            <img src="../../../images/SH_Logo_B.png" alt="image" class="mx-auto" style="width: 235px" />
+
             <p class="text-center text-sm font-medium mt-3">Register below to create your account</p>
             <a-alert v-if="Object.keys(form.errors).length > 0" class="!mb-3" type="error" show-icon>
               <template #description>
@@ -38,7 +40,7 @@
             </a-row>
             <!-- Submit Button -->
             <div class="mt-3">
-              <a-button :style="{ backgroundColor: 'orange', borderRadius: '0' }" block type="primary" size="large" html-type="submit" :loading="form.processing">Register</a-button>
+              <a-button :style="{ borderRadius: '0' }" block type="primary" size="large" html-type="submit" :loading="form.processing" style="background-color:#1f2835">Register</a-button>
             </div>
 
             <!-- Register Link -->
@@ -52,7 +54,7 @@
 
       <!-- Right Side: Image -->
       <div class="hidden md:flex w-1/2 items-center justify-center bg-gray-100">
-        <img src="../../../images/sideimage.png" alt="image" class="h-full mx-auto" />
+        <img src="../../../images/image-right.png" alt="image" class="h-full mx-auto" />
       </div>
     </div>
   </div>

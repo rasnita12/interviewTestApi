@@ -32,6 +32,11 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
     ->middleware('guest');
 
+//forget password
+Route::get('forgot-password', [AuthenticatedSessionController::class, 'forgetPassword'])
+    ->name('login.forgot-password')
+    ->middleware('guest');
+
 //logout
 Route::any('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');

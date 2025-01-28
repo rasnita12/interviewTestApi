@@ -3,7 +3,7 @@
     <input type="text" ref="addressInput" v-model="search" @focus="initAutocomplete" placeholder="Enter an address" required class="address-input !w-[80%] border border-gray-300 rounded-md p-3 focus:border-blue-300 focus:ring-0 focus:outline-none" />
 
     <a-form-item class="mt-3 md:mt-0">
-      <a-button class="!rounded-md !ml-2 h-[50] md:h-[50px]" :style="{ backgroundColor: 'orange', borderRadius: '0' }" type="primary" size="small md:large" html-type="submit">Submit</a-button>
+      <a-button class="!rounded-md !ml-2 h-[50] md:h-[50px]" :style="{ borderRadius: '0' }" type="primary" size="small md:large" style="background-color:#1f2835" html-type="submit">Submit</a-button>
     </a-form-item>
   </a-form>
 </template>

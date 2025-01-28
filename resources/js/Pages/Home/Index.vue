@@ -3,7 +3,9 @@
   <div class="min-h-screen bg-white">
     <div class="">
       <div class="container mx-auto w-full p-10 flex justify-between items-center">
-        <h1 class="font-bold text-lg md:text-4xl !text-center mb-0 md:mb-4">SIGMA HEALTH</h1>
+        <img src="../../../images/SH_Logo_B.png" alt="image" style="width: 235px" />
+
+        <!-- <h1 class="font-bold text-lg md:text-4xl !text-center mb-0 md:mb-4">SIGMA HEALTH</h1> -->
         <a-dropdown :arrow="true" class="text-sm md:text-base">
           <a class="ant-dropdown-link" @click.prevent>
             {{ $page?.props.auth.user.first_name + ' ' + $page?.props.auth.user.last_name }}
@@ -33,7 +35,7 @@
 
               <input type="text" ref="addressInput" v-model="search" @focus="initAutocomplete" placeholder="Enter an address" required class="address-input w-full border border-gray-300 rounded-md p-3 focus:border-blue-300 focus:ring-0 focus:outline-none" />
               <div class="mt-4">
-                <a-button :style="{ backgroundColor: 'orange', borderRadius: '0' }" block type="primary" size="large" html-type="submit" :loading="form.processing">Find</a-button>
+                <a-button :style="{ borderRadius: '0' }" block type="primary" size="large" html-type="submit" :loading="form.processing" style="background-color:#1f2835">Find</a-button>
               </div>
             </div>
           </a-form>
@@ -42,7 +44,7 @@
     </div>
   </div>
   <div class="hidden">
-  <GoogleMap api-key="AIzaSyCi327LFl7byyspi_v7snyRjEVQPptUBPc" mapId="30a0d969799b3759" style="width: 100%; height: 100vh"> </GoogleMap>
+    <GoogleMap api-key="AIzaSyCi327LFl7byyspi_v7snyRjEVQPptUBPc" mapId="30a0d969799b3759" style="width: 100%; height: 100vh"> </GoogleMap>
   </div>
 </template>
 <script>
