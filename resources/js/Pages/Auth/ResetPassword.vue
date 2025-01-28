@@ -21,7 +21,10 @@
             </a-alert>
             <!-- Input -->
             <div class="mt-6">
-               <text-input name="email" v-model="form.email" class="mt-10" :rules="[{ required: true, message: 'The email field is required.' }]" label="Email" type="email" placeholder="Enter Email" />
+              <password-input name="password" v-model="form.password" placeholder="Enter Password" label="Password" :rules="[{ required: true, message: 'The password field is required!' }]" class="mt-5" />
+
+              <password-input name="password_confirmation" v-model="form.password_confirmation" placeholder="Enter Password Confirmation" label="Password Confirmation" :rules="[{ required: true, message: 'The password confirmation field is required!' }]" class="mt-5" />
+
             </div>
 
             <!-- Submit Button -->
@@ -30,7 +33,6 @@
             </div>
 
             <p class="mt-3 text-center">Know your password? <Link :href="route('login')">Login </Link></p>
-
           </div>
         </a-form>
       </div>
@@ -60,29 +62,36 @@ export default {
     PasswordInput,
     Link,
   },
+  props: {
+    token: Object
+  },
   data() {
     return {
       form: this.$inertia.form({
-        email: '',
+        email: this.token.email,
+        password: '',
+        password_confirmation: ''
       }),
-
       successMessage: null,
     }
   },
   mounted() {
+    this.successMessage = this.$page?.props?.flash?.success ?? null
 
+    setTimeout(() => {
+        this.successMessage = null;
+    }, 10000);
   },
   methods: {
     login() {
       this.$refs.form
         .validateFields()
         .then(() => {
-          this.form.post(this.route('forgot-password.store'),{
+          this.form.post(route('reset-password.store', {code: this.token.token}), {
             onSuccess: (page) => {
-              this.form.email = ''
               this.$notification.success({
                 message: 'Success',
-                description: 'Password reset link has been sent your email address.',
+                description: 'Password reset successfully.',
                 placement: 'bottomLeft',
                 duration: 10,
               });

@@ -37,7 +37,7 @@
             <!-- forgot password -->
             <p class="text-center text-sm font-medium mt-3">
               Don't remember a password?
-              <Link class="cursor-pointer text-blue-700 underline" :href="route('login.forgot-password')">Reset Password</Link>
+              <Link class="cursor-pointer text-blue-700 underline" :href="route('forgot-password')">Reset Password</Link>
             </p>
 
             <!-- Register Link -->

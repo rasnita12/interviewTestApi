@@ -33,9 +33,17 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest');
 
 //forget password
-Route::get('forgot-password', [AuthenticatedSessionController::class, 'forgetPassword'])
-    ->name('login.forgot-password')
-    ->middleware('guest');
+
+Route::group(['prefix' => 'forgot-password', 'middleware' => ['guest']], function () {
+    Route::get('/', [AuthenticatedSessionController::class, 'forgetPassword'])->name('forgot-password');
+    Route::post('/store', [AuthenticatedSessionController::class, 'storeForgetPassword'])->name('forgot-password.store');
+});
+
+//Reset Password
+Route::group(['prefix' => 'reset-password', 'middleware' => ['guest']], function () {
+    Route::get('/{code}', [AuthenticatedSessionController::class, 'resetPassword'])->name('reset-password');
+    Route::post('/store/{code}', [AuthenticatedSessionController::class, 'storeResetPassword'])->name('reset-password.store');
+});
 
 //logout
 Route::any('logout', [AuthenticatedSessionController::class, 'destroy'])
