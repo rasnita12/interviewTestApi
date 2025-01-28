@@ -33,7 +33,6 @@ Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest');
 
 //forget password
-
 Route::group(['prefix' => 'forgot-password', 'middleware' => ['guest']], function () {
     Route::get('/', [AuthenticatedSessionController::class, 'forgetPassword'])->name('forgot-password');
     Route::post('/store', [AuthenticatedSessionController::class, 'storeForgetPassword'])->name('forgot-password.store');
