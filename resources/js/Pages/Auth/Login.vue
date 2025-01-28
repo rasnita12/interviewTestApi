@@ -50,9 +50,8 @@
       </div>
 
       <!-- Right Side: Image -->
-      <div class="hidden md:flex w-1/2 items-center justify-center bg-gray-100">
+      <div class="hidden md:flex w-1/2 items-center justify-center bg-white">
         <img src="../../../images/image-right.png" alt="image" class="mx-auto" />
-        <!-- <img src="../../../images/sideimage.png" alt="image" class="h-full mx-auto" /> -->
       </div>
     </div>
   </div>
