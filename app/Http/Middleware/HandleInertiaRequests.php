@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,7 @@ class HandleInertiaRequests extends Middleware
                     ] : null,
                 ];
             },
+            'setting' => DB::table('settings')->first(),
             'flash' => function () use ($request) {
                 return [
                     'success' => session()->get('success'),

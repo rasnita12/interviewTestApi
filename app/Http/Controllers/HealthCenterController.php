@@ -116,7 +116,8 @@ class HealthCenterController extends Controller
     public function getHealthCenters($postcode = null)
     {
         if(!empty($postcode)) {
-            $apiKey = 'AIzaSyCi327LFl7byyspi_v7snyRjEVQPptUBPc'; //google map api key
+
+            $apiKey = DB::table('settings')->first()->map_api_key; //google map api key
             try{
                 // Geocoding to get coordinates
                 $geocodeResponse = Http::get("https://maps.googleapis.com/maps/api/geocode/json", [

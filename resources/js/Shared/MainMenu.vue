@@ -10,6 +10,9 @@
           <a-menu-item key="health-center">
               <Link :href="route('health-centers.index')"> <i class="fa-regular fa-hospital"></i> Health Center </Link>
           </a-menu-item>
+          <a-menu-item key="settings">
+              <Link :href="route('settings.index')"> <i class="fa-solid fa-gear"></i> Settings</Link>
+          </a-menu-item>
       </a-menu>
   </div>
 </template>

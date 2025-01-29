@@ -44,7 +44,7 @@
     </div>
   </div>
   <div class="hidden">
-    <GoogleMap api-key="AIzaSyCi327LFl7byyspi_v7snyRjEVQPptUBPc" mapId="30a0d969799b3759" style="width: 100%; height: 100vh"> </GoogleMap>
+    <GoogleMap :api-key="setting.map_api_key" :mapId="setting.map_id" style="width: 100%; height: 100vh"> </GoogleMap>
   </div>
 </template>
 <script>
@@ -60,6 +60,12 @@ export default {
     Link,
     TextInput,
     GoogleMap,
+  },
+  props: {
+    setting: {
+      type: Object,
+      default: {},
+    },
   },
   data() {
     return {

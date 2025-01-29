@@ -41,7 +41,7 @@
         </div>
 
         <!-- Right Side: Image -->
-        <GoogleMap api-key="AIzaSyCi327LFl7byyspi_v7snyRjEVQPptUBPc" mapId="30a0d969799b3759" style="width: 100%; height: 100vh" :center="center" :zoom="12">
+        <GoogleMap :api-key="setting.map_api_key" :mapId="setting.map_id" style="width: 100%; height: 100vh" :center="center" :zoom="12">
           <AdvancedMarker v-for="(item, index) in healthCenters" :key="index" :options="{ position: { lat: parseFloat(item.latitude), lng: parseFloat(item.longitude) }, title: item.name }" />
         </GoogleMap>
       </div>
@@ -75,6 +75,10 @@ export default {
       default: null,
     },
     center: {
+      type: Object,
+      default: {},
+    },
+    setting: {
       type: Object,
       default: {},
     },

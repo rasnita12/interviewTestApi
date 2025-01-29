@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HealthCenterController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\User\UserAccountController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,11 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/{id}/edit', [HealthCenterController::class, 'edit'])->name('health-centers.edit');
         Route::patch('/{id}/update', [HealthCenterController::class, 'update'])->name('health-centers.update');
         Route::delete('/{id}/destroy', [HealthCenterController::class, 'delete'])->name('health-centers.delete');
+    });
+
+    Route::group(['prefix' => 'settings','middleware' => ['role:Admin']], function () {
+        Route::get('/',[SettingController::class, 'index'])->name('settings.index');
+        Route::post('/',[SettingController::class, 'store'])->name('settings.store');
     });
 
 });
