@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\Customer\CustomerController;
+use App\Http\Controllers\Admin\User\LoginHistoryController;
+use App\Http\Controllers\Admin\User\PasswordController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HealthCenterController;
 use App\Http\Controllers\SettingController;
@@ -69,8 +71,10 @@ Route::group(['middleware' => ['auth']], function() {
     //customers
     Route::group(['prefix' => 'customers', 'middleware' => ['role:Admin']], function() {
         Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
-        Route::get('/ajax/list', [CustomerController::class, 'ajaxList'])->name('customers.lists');
-        Route::get('/{id}/fetch/history', [CustomerController::class, 'fetchHistory'])->name('customers.history');
+        Route::get('/{id}', [CustomerController::class, 'detail'])->name('customers.detail');
+        Route::post('/store', [CustomerController::class, 'store'])->name('customers.store');
+        Route::patch('/{id}/update', [CustomerController::class, 'update'])->name('customers.update');
+        Route::get('/ajax/list', [CustomerController::class, 'ajaxLists'])->name('customers.lists');
     });
 
     Route::group(['prefix' => 'health-centers', 'middleware' => ['role:Admin']], function() {
@@ -81,6 +85,11 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/{id}/edit', [HealthCenterController::class, 'edit'])->name('health-centers.edit');
         Route::patch('/{id}/update', [HealthCenterController::class, 'update'])->name('health-centers.update');
         Route::delete('/{id}/destroy', [HealthCenterController::class, 'delete'])->name('health-centers.delete');
+    });
+
+    Route::group(['prefix' => 'user', 'middleware' => ['role:Admin']], function() {
+        Route::patch('/{id}/change-password', [PasswordController::class, 'update'])->name('users.changePassword');
+        Route::get('/{id}/fetch/history', [LoginHistoryController::class, 'index'])->name('users.histories');
     });
 
     Route::group(['prefix' => 'settings','middleware' => ['role:Admin']], function () {
