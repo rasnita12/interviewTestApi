@@ -50,14 +50,6 @@ return Application::configure(basePath: dirname(__DIR__))
                     'errors' => $transformed,
                 ], 422);
             }
-
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'message' => app()->isProduction() ? 'Something went wrong.' : $e->getMessage(),
-                ], 500);
-            }
-
-            return $request;
         });
     })->create();
 
