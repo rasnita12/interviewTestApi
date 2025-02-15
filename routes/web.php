@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HealthCenterController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\User\UserAccountController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -96,5 +97,14 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/',[SettingController::class, 'index'])->name('settings.index');
         Route::post('/',[SettingController::class, 'store'])->name('settings.store');
     });
+});
 
+Route::group(['prefix' => 'system'], function() {
+   Route::get('/cache-clear', function() {
+       Artisan::call('optimize:clear');
+   });
+
+   Route::get('/migrate', function() {
+       Artisan::call('migrate --force');
+   });
 });
