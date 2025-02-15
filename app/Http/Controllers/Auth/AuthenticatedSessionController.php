@@ -71,6 +71,10 @@ class AuthenticatedSessionController extends Controller
         try {
             $user = User::query()->where('email', $request->email)->first();
 
+            if(!$user){
+                return redirect()->back()->with('error', 'User not found with this email.');
+            }
+
             $confirmation_code = Str::random(30);
 
             DB::table('password_reset_tokens')->where('email', '=', $request->email)->delete();

@@ -5,6 +5,8 @@ use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -33,5 +35,21 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->replace(\Illuminate\Http\Middleware\TrustProxies::class, \App\Http\Middleware\TrustProxies::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (ValidationException $e, Request $request) {
+            if ($request->wantsJson()) {
+                $transformed = [];
+                foreach ($e->validator->getMessageBag()->toArray() as $field => $message) {
+                    $transformed[] = [
+                        'field' => $field,
+                        'message' => $message[0]
+                    ];
+                }
+
+                return response()->json([
+                    'message' => trans('The given data was invalid.'),
+                    'errors' => $transformed,
+                ], 422);
+            }
+        });
     })->create();
+

@@ -27,8 +27,13 @@
                 <text-input name="last_name" v-model="form.last_name" :rules="[{ required: true, message: 'Last name field is required.' }]" label="Last Name" placeholder="Enter Last Name" />
               </a-col>
               <!-- Email Input -->
-              <a-col class="gutter-row" :span="24">
-                <text-input name="email" v-model="form.email" :rules="[{ required: true, message: 'Email field is required.' }]" type="email" label="Email" placeholder="Enter Email" />
+              <a-col class="gutter-row" :span="24" :md="{ span: 12 }">
+                <text-input name="username" v-model="form.username" :rules="[{ required: true, message: 'Username field is required.' }]" label="Username" placeholder="Enter Username" />
+              </a-col>
+
+              <!-- Username Input -->
+              <a-col class="gutter-row" :span="24" :md="{ span: 12 }">
+                <text-input name="email" v-model="form.email" type="email" label="Email" placeholder="Enter Email" />
               </a-col>
               <!-- Password Input -->
               <a-col class="gutter-row" :span="24" :md="{ span: 12 }">
@@ -76,6 +81,7 @@ export default {
     return {
       form: this.$inertia.form({
         email: '',
+        username: '',
         password_confirmation: '',
         password: '',
         first_name: '',

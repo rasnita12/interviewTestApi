@@ -21,7 +21,7 @@
             </a-alert>
             <!-- Input -->
             <div class="mt-6">
-              <text-input name="email" v-model="form.email" class="mt-10" :rules="[{ required: true, message: 'The email field is required.' }]" label="Email" type="email" placeholder="Enter Email" />
+              <text-input name="username" v-model="form.username" class="mt-10" :rules="[{ required: true, message: 'The username field is required.' }]" label="Username" placeholder="Enter Username" />
 
               <password-input name="password" v-model="form.password" placeholder="Enter Password" label="Password" :rules="[{ required: true, message: 'The password field is required!' }]" class="mt-5" />
 
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        email: '',
+        username: '',
         password: '',
         remember: false,
       }),

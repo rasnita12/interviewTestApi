@@ -1,12 +1,15 @@
 <template>
   <div>
     <Head title="Customers" />
-    <div class="flex flex-row items-center">
-      <h1 class="mb-4 text-3xl font-bold mr-3">Customers</h1>
-      <a-breadcrumb>
-        <a-breadcrumb-item><Link :href="route('dashboard')">Dashboard</Link></a-breadcrumb-item>
+    <div class="flex items-center justify-between mb-4">
+      <Breadcrumb title="Customers">
         <a-breadcrumb-item>Customers</a-breadcrumb-item>
-      </a-breadcrumb>
+      </Breadcrumb>
+
+        <a-button @click="dialog = true" html-type="link" type="primary" size="middle">
+          <template #icon><PlusOutlined /></template>
+          Create
+        </a-button>
     </div>
 
     <a-card bordered>
@@ -31,13 +34,25 @@
       >
         <template #bodyCell="{ column, text, record }">
           <template v-if="column.dataIndex === 'action'">
-            <a-button @click="viewHistory(record)" type="primary" :style="{ backgroundColor: 'orange' }" size="middle">
-              <template #icon><i class="fa fa-eye"></i></template>
-            </a-button>
+            <a-space :size="4">
+              <a-button @click="preEdit(record.id)" type="primary" :style="{ backgroundColor: '#1f2835' }" size="middle">
+                <template #icon><i class="fa fa-edit"></i></template>
+              </a-button>
+              <a-button @click="viewHistory(record)" type="primary" :style="{ backgroundColor: 'orange' }" size="middle">
+                <template #icon><i class="fa fa-eye"></i></template>
+              </a-button>
+              <a-button @click.prevent="showPasswordForm(record)" type="primary" size="middle" :style="{ backgroundColor:'#5fc62b' }" >
+                <template #icon><LockOutlined /></template>
+              </a-button>
+            </a-space>
           </template>
         </template>
       </a-table>
     </a-card>
+
+    <CustomerForm v-if="dialog" :editItem="editItem" :show-modal="dialog" @refresh-data="initialize" @close-modal="dialog = !dialog" />
+
+    <UserPassword v-if="passwordForm.dialog" :user="passwordForm.user" :show-modal="passwordForm.dialog" @close-modal="closePasswordForm" />
 
     <a-modal v-if="open" v-model:open="open" :title="`History of ${user.first_name} ${user.last_name}`" @ok="handleOk">
       <a-table :loading="historyLoading" :columns="historyColumns" :data-source="histories">
@@ -54,16 +69,25 @@
 import { Head, Link } from '@inertiajs/vue3'
 import Layout from '@/Shared/Layout.vue'
 import axios from 'axios'
-import { SearchOutlined } from '@ant-design/icons-vue'
-import TextInput from '../../Shared/TextInput.vue'
+import { SearchOutlined, PlusOutlined, EditOutlined, LockOutlined } from '@ant-design/icons-vue'
+import TextInput from '../../../Shared/TextInput.vue'
 import debounce from 'lodash/debounce.js'
 import dayjs from 'dayjs'
+import Breadcrumb from '../../../Components/Shared/Breadcrumb.vue'
+import CustomerForm from '../../../Components/Admin/Form/Customer/Form.vue'
+import UserPassword from '../../../Components/Admin/Form/User/UserPassword.vue'
 
 export default {
   components: {
+    UserPassword,
+    CustomerForm,
+    Breadcrumb,
     Head,
     Link,
     TextInput,
+    PlusOutlined,
+    EditOutlined,
+    LockOutlined
   },
   layout: Layout,
 
@@ -134,6 +158,14 @@ export default {
       user: null,
       histories: [],
       historyLoading: false,
+
+      dialog: false,
+      editItem: null,
+
+      passwordForm: {
+        dialog: false,
+        user: null,
+      }
     }
   },
 
@@ -150,6 +182,21 @@ export default {
   methods: {
     dayjs,
 
+    showPasswordForm(user) {
+      this.passwordForm.user = user
+      this.passwordForm.dialog = true
+    },
+
+    closePasswordForm() {
+      this.passwordForm.dialog = false;
+      this.passwordForm.user = null
+    },
+
+    preEdit(id) {
+        this.editItem = id;
+        this.dialog = true
+    },
+
     viewHistory(user) {
       this.user = user
       this.open = true
@@ -164,7 +211,7 @@ export default {
     async fetchHistories() {
       this.historyLoading = true
       await axios
-        .get(this.route('customers.history', { id: this.user.id }))
+        .get(this.route('users.histories', { id: this.user.id }))
         .then((response) => {
           this.histories = response.data
         })

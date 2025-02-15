@@ -20,9 +20,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'username'
+    ];
+
+    protected $appends = [
+        'full_name'
     ];
 
     /**
@@ -45,6 +51,14 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the user's full name.
+     */
+    protected function getFullNameAttribute(): string
+    {
+        return  implode(' ', [$this->first_name, $this->last_name]);
     }
 
     public function setPasswordAttribute($password)
