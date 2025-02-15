@@ -25,7 +25,7 @@ class CustomerUpdateRequest extends FormRequest
             'first_name'=>'required|string|min:3',
             'last_name'=>'required|string|min:3',
             'email'=>'nullable|email|unique:users'.(request()->method() == 'PATCH' ? ',email,' . $this->id : ''),
-            'username'=>'required|string|unique:users'.(request()->method() == 'PATCH' ? ',username,' . $this->id : ''),
+            'username'=>'required|alpha_dash|unique:users'.(request()->method() == 'PATCH' ? ',username,' . $this->id : ''),
         ];
     }
 }

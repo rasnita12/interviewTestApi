@@ -72,7 +72,8 @@ export default {
                         this.handleSubmit()
                       })
                       .catch((error) => {
-                        this.errors = error.response.errors
+                        console.log(error)
+                        this.errors = error.response.data.errors
                       })
                       .finally(() => {
                         this.submitting = false
