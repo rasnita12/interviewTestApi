@@ -109,6 +109,13 @@ export default {
           showSorterTooltip: false,
         },
         {
+          title: 'Username',
+          key: 'username',
+          dataIndex: 'username',
+          sorter: true,
+          showSorterTooltip: false,
+        },
+        {
           title: 'Email',
           key: 'email',
           dataIndex: 'email',
